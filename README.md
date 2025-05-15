@@ -44,4 +44,4 @@ This template deploys an instance of [RabbitMQ](https://www.rabbitmq.com/) on Pi
 
 ---
 
-*Note: The quickstart NodeJS consumer/producer apps referenced in the original template are not included in this repository. You can add your own apps or scripts as needed to connect to RabbitMQ over SSL.*
+**Quickstart Go Consumer/Producer**: For a ready-to-use Go example that connects to RabbitMQ over SSL, see [`QUICKSTART-GO.md`](./QUICKSTART-GO.md) in this repository. This guide is based on [pipeops-dev/rabbitmq-test](https://github.com/pipeops-dev/rabbitmq-test) and demonstrates how to connect, publish, and consume messages securely using Go.
