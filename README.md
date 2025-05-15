@@ -4,7 +4,7 @@ This template deploys an instance of [RabbitMQ](https://www.rabbitmq.com/) on Pi
 
 ## Features
 
-- One-click deploy of RabbitMQ with SSL (AMQP over 5671, management UI over 15671)
+- One-click deploy of RabbitMQ with SSL (AMQP over 5671, management UI over 15672)
 - Pre-configured SSL certificates (see `certs/` directory)
 - Secure RabbitMQ management UI
 - Customizable configuration via `rabbitmq.conf`
@@ -15,16 +15,21 @@ This template deploys an instance of [RabbitMQ](https://www.rabbitmq.com/) on Pi
 
 2. **SSL Certificates**: If you do not provide your own, self-signed SSL certificates will be generated automatically on container startup and placed in the `certs/` directory. For custom certificates, place your SSL certificates in the `certs/` directory before building the image.
 
-3. **Configuration**: Edit `rabbitmq.conf` to adjust listeners, SSL options, and other settings as needed. The default configuration enables SSL for both AMQP and the management UI.
+3. **Configuration**: Edit `rabbitmq.conf` to adjust listeners, SSL options, and other settings as needed. The default configuration enables SSL for AMQP.
 
 4. **Build & Run**:
 
    ```sh
    docker build -t rabbitmq-ssl .
-   docker run -d -p 5671:5671 -p 15671:15671 --name rabbitmq-ssl rabbitmq-ssl
+   docker run -d -p 5671:5671 -p 15672:15672 --name rabbitmq-ssl rabbitmq-ssl
    ```
 
-5. **Access Management UI**: Visit `https://localhost:15671` in your browser (accept the self-signed certificate if prompted).
+   # To persist RabbitMQ data, you can mount a volume:
+   # docker run -d -p 5671:5671 -p 15672:15672 \
+   #   -v /your/host/path/rabbitmq-data:/var/lib/rabbitmq \
+   #   --name rabbitmq-ssl rabbitmq-ssl
+
+5. **Access Management UI**: Visit `http://localhost:15672` in your browser.
 
 ## Configuration
 
@@ -45,3 +50,11 @@ This template deploys an instance of [RabbitMQ](https://www.rabbitmq.com/) on Pi
 ---
 
 **Quickstart Go Consumer/Producer**: For a ready-to-use Go example that connects to RabbitMQ over SSL, see [`QUICKSTART-GO.md`](./QUICKSTART-GO.md) in this repository. This guide is based on [pipeops-dev/rabbitmq-test](https://github.com/pipeops-dev/rabbitmq-test) and demonstrates how to connect, publish, and consume messages securely using Go.
+
+---
+
+**Note**:
+
+- AMQP (queue) port 5671 is secured with SSL.
+- The management UI runs on port 15672 without SSL (HTTP only).
+- Only the AMQP port (5671) uses SSL. The management UI is available over HTTP (port 15672).
