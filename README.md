@@ -20,7 +20,7 @@ This template deploys an instance of [RabbitMQ](https://www.rabbitmq.com/) on Pi
 4. **Build & Run**:
 
    ```sh
-   docker build -t rabbitmq-ssl .
+   docker build -t rabbitmq-ssl --build-arg PIPEOPS_PROJECT_NAME=your-project-name .
    docker run -d -p 5671:5671 -p 15672:15672 --name rabbitmq-ssl rabbitmq-ssl
    ```
 
@@ -58,3 +58,4 @@ This template deploys an instance of [RabbitMQ](https://www.rabbitmq.com/) on Pi
 - AMQP (queue) port 5671 is secured with SSL.
 - The management UI runs on port 15672 without SSL (HTTP only).
 - Only the AMQP port (5671) uses SSL. The management UI is available over HTTP (port 15672).
+- The SSL certificate's Common Name (CN) and Subject Alternative Name (SAN) will match the value of the `PIPEOPS_PROJECT_NAME` build argument, if provided. This ensures SSL validation works for your chosen project/hostname.
