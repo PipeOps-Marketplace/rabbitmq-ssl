@@ -1,4 +1,4 @@
-FROM rabbitmq:3.12-management
+FROM rabbitmq:4.1-management
 
 ARG RABBITMQ_DEFAULT_USER
 ARG RABBITMQ_DEFAULT_PASS
