@@ -18,7 +18,7 @@ COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 # Expose AMQP SSL and management HTTP ports
-EXPOSE 5671 15672
+EXPOSE 5671 5672 15672
 
 # Start RabbitMQ with entrypoint
 ENTRYPOINT ["/entrypoint.sh"]

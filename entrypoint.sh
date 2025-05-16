@@ -2,17 +2,16 @@
 set -e
 
 CERT_DIR="/etc/rabbitmq/certs"
-CA_CERT="$CERT_DIR/ca.crt"
+OPENSSL_CONF="$CERT_DIR/openssl-wildcard.cnf"
 SERVER_CERT="$CERT_DIR/server.crt"
 SERVER_KEY="$CERT_DIR/server.key"
 
-# Generate self-signed certs if not present
-if [[ ! -f "$CA_CERT" || ! -f "$SERVER_CERT" || ! -f "$SERVER_KEY" ]]; then
-  echo "[entrypoint] Generating self-signed SSL certificates..."
+# Generate wildcard SSL cert if not present
+if [[ ! -f "$SERVER_CERT" || ! -f "$SERVER_KEY" ]]; then
+  echo "[entrypoint] Generating wildcard SSL certificate..."
   mkdir -p "$CERT_DIR"
-  openssl req -x509 -newkey rsa:4096 -keyout "$SERVER_KEY" -out "$SERVER_CERT" -days 365 -nodes -subj "/CN=localhost"
-  cp "$SERVER_CERT" "$CA_CERT"
-  chown rabbitmq:rabbitmq "$CA_CERT" "$SERVER_CERT" "$SERVER_KEY"
+  openssl req -new -x509 -days 365 -nodes -out "$SERVER_CERT" -keyout "$SERVER_KEY" -config "$OPENSSL_CONF" -extensions v3_req
+  chown rabbitmq:rabbitmq "$SERVER_CERT" "$SERVER_KEY"
 else
   echo "[entrypoint] Using existing SSL certificates."
 fi
