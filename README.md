@@ -38,8 +38,9 @@ This template deploys an instance of [RabbitMQ](https://www.rabbitmq.com/) on Pi
 ## SSL Certificates
 
 - By default, self-signed certificates are generated automatically if none are present in the `certs/` directory.
-- To use your own certificates, place your CA, server certificate, and key in the `certs/` directory before building the image.
+- **For production:** Use a certificate signed by a trusted Certificate Authority (CA) such as Let's Encrypt. Place your CA certificate (`ca.crt`), server certificate (`server.crt`), and private key (`server.key`) in the `certs/` directory before building the image. This will allow clients to trust the RabbitMQ server automatically.
 - For manual self-signed cert generation, see [`certs/README.md`](./certs/README.md).
+- **Important:** If you use self-signed certificates, your client must trust the generated CA certificate (`certs/ca.crt`). Download this file from the container or the `certs/` directory and configure your client to use it as a trusted CA.
 
 ## Links
 
