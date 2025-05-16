@@ -22,12 +22,11 @@ This template deploys an instance of [RabbitMQ](https://www.rabbitmq.com/) on Pi
    ```sh
    docker build -t rabbitmq-ssl --build-arg PIPEOPS_PROJECT_NAME=your-project-name .
    docker run -d -p 5671:5671 -p 15672:15672 --name rabbitmq-ssl rabbitmq-ssl
-   ```
-
-   # To persist RabbitMQ data, you can mount a volume:
+   # To persist RabbitMQ data:
    # docker run -d -p 5671:5671 -p 15672:15672 \
    #   -v /your/host/path/rabbitmq-data:/var/lib/rabbitmq \
    #   --name rabbitmq-ssl rabbitmq-ssl
+   ```
 
 5. **Access Management UI**: Visit `http://localhost:15672` in your browser.
 
