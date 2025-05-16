@@ -3,6 +3,8 @@ FROM rabbitmq:3.12-management
 ARG RABBITMQ_DEFAULT_USER
 ARG RABBITMQ_DEFAULT_PASS
 ARG RABBITMQ_DEFAULT_VHOST
+ARG PIPEOPS_PROJECT_NAME
+ENV PIPEOPS_PROJECT_NAME=${PIPEOPS_PROJECT_NAME}
 
 RUN rabbitmq-plugins enable --offline rabbitmq_mqtt rabbitmq_federation_management rabbitmq_stomp
 
